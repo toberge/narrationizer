@@ -21,3 +21,11 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# HEY YOU THERE
+# THIS IS MY REPO
+# and I use IntelliJ
+# and, uh, I can't remove workspace.xml?
+.idea/workspace.xml
+.idea/vcs.xml
+.idea/tasks.xml
