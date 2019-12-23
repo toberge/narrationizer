@@ -1,4 +1,5 @@
 import { hashMaps, lookaheadIndexOf, types } from './words';
+import { createParseAction, ParsedPhrase } from './actions';
 
 /**
  * Kind of an LR parser, used https://en.wikipedia.org/wiki/LR_parser as reference
@@ -45,9 +46,10 @@ export const lookaheadTable: number[][] = [
   ]
 ];
 
-export const parse = (command: string): null | (string|number)[] => {
-  const stack : (string|number)[] = [];
-  stack.push(0);
+export const parse = (command: string): null | ParsedPhrase[] => {
+  const debugStack : (string|number)[] = [];
+  debugStack.push(0);
+  const stack: ParsedPhrase[] = [];
   const input: string[] = command.split(' ');
   let position = 0;
 
@@ -57,6 +59,7 @@ export const parse = (command: string): null | (string|number)[] => {
 
   let state: number = 0;
 
+  // TODO get rid of those two booleans & have pure returns!
   while (!error && !done) {
 
     if (state === -1) {
@@ -77,15 +80,15 @@ export const parse = (command: string): null | (string|number)[] => {
 
     let lookahead = -1;
     let scanPos = position + 1;
-    let currentSlice = '';
+    let phrase = '';
     // do the lexical parsing
     while (lookahead < 0 && scanPos <= input.length) {
-      currentSlice = input.slice(position, scanPos).reduce((acc, val) => `${acc} ${val}`);
-      lookahead = lookaheadIndexOf(currentSlice);
+      phrase = input.slice(position, scanPos).reduce((acc, val) => `${acc} ${val}`);
+      lookahead = lookaheadIndexOf(phrase);
       scanPos++;
     }
     position = scanPos - 1;
-    console.log(currentSlice);
+    console.log(phrase);
 
     // did we find anything? if not, it's invalid.
     if (scanPos === input.length + 1 && lookahead < 0) {
@@ -95,12 +98,13 @@ export const parse = (command: string): null | (string|number)[] => {
     }
 
     // push slice and next state to stack, doing the "actual" parsing work here
-    stack.push(currentSlice);
-    stack.push(types[lookahead]);
+    debugStack.push(phrase);
+    debugStack.push(types[lookahead]);
+    stack.push(createParseAction(phrase, lookahead));
     console.log('was in state', state);
     state = lookaheadTable[state][lookahead];
     console.log('state:', state, 'lookahead:', lookahead);
-    stack.push(state);
+    debugStack.push(state);
   }
 
   if (error) {
@@ -108,7 +112,7 @@ export const parse = (command: string): null | (string|number)[] => {
     return null;
   } else {
     console.log('is valid');
-    console.log(stack);
+    console.log(debugStack);
     return stack;
   }
 };

@@ -1,4 +1,4 @@
-import { parse, lookaheadTable } from './Parser';
+import { parse, lookaheadTable } from './parser';
 import { hashMaps } from './words';
 
 describe('parser', () => {
