@@ -13,13 +13,3 @@ jobs:
       - run: npm test
         env:
           CI: true
-
-  deploy:
-    # deploying to GitHub Pages
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-      - run: npm install
-      - run: npm run deploy
