@@ -58,20 +58,14 @@ export const parse = (command: string): null | (string|number)[] => {
   let state: number = 0;
 
   while (!error && !done) {
-    // const state  : number | string = stack[stack.length - 1];
-    // if (typeof state !== 'number') {
-    //   error = true;
-    //   break;
-    // }
 
     if (state === -1) {
-      console.error('reached error state');
+      console.error('reached error state; command did not match syntax');
       error = true;
       break;
     }
 
     if (position === input.length) {
-      console.log('reached eof with state', state);
       if (lookaheadTable[state][lookaheadTable[0].length - 1] === -2) {
         // we reached EOF in valid state
         done = true;
@@ -87,15 +81,15 @@ export const parse = (command: string): null | (string|number)[] => {
     // do the lexical parsing
     while (lookahead < 0 && scanPos <= input.length) {
       currentSlice = input.slice(position, scanPos).reduce((acc, val) => `${acc} ${val}`);
-      console.log(currentSlice);
       lookahead = lookaheadIndexOf(currentSlice);
       scanPos++;
     }
     position = scanPos - 1;
+    console.log(currentSlice);
 
     // did we find anything? if not, it's invalid.
     if (scanPos === input.length + 1 && lookahead < 0) {
-      console.error('invalid command yo', lookahead);
+      console.error('lexical lookup failed, invalid command!');
       error = true;
       break;
     }
@@ -105,7 +99,7 @@ export const parse = (command: string): null | (string|number)[] => {
     stack.push(types[lookahead]);
     console.log('was in state', state);
     state = lookaheadTable[state][lookahead];
-    console.error('thing is the', state, lookahead);
+    console.log('state:', state, 'lookahead:', lookahead);
     stack.push(state);
   }
 

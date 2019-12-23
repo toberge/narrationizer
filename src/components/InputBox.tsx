@@ -1,5 +1,6 @@
 import React, { SyntheticEvent } from 'react';
 import { parse } from '../game/Parser';
+import Log from './Log';
 
 const Form = ({
   onChange,
@@ -17,26 +18,27 @@ const Form = ({
 
 export class FormContainer extends React.Component<
   {},
-  { command: string; feedback: string | null | React.ReactText[] }
+  { command: string; feedback: string[] }
 > {
   constructor(props: any) {
     super(props);
-    this.state = { command: '', feedback: '' };
+    this.state = { command: '', feedback: ['this is the first line of the log'] };
   }
 
-  doTHings() {
+  updateLog() {
     const thing = parse(this.state.command);
-    return thing ? thing.toString() : 'nah';
+    return [...this.state.feedback, thing ? thing.toString() : 'nah'];
+    // return this.state.feedback.push(thing ? thing.toString() : 'nah');
   }
 
   render() {
     return (
       <>
+        <Log text={this.state.feedback} />
         <Form
           onChange={command => this.setState({ command: command })}
-          onSubmit={() => this.setState({ feedback: this.doTHings() })}
+          onSubmit={() => this.setState({ feedback: this.updateLog() })}
         />
-        <p>{this.state.feedback}</p>
       </>
     );
   }

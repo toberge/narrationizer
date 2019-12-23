@@ -1,0 +1,11 @@
+#log {
+  box-sizing: border-box;
+  height: 60vh;
+  width: 100%;
+  padding: 2%;
+
+  overflow: hidden;
+  scroll-behavior: smooth;
+
+  color: #333;
+}

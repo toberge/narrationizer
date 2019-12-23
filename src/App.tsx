@@ -12,7 +12,13 @@ const App: React.FC = () => {
         <FormContainer />
       </main>
       <footer>
-        <small>bye there</small>
+        <p>
+          <small>
+            a friendly reminder that this is <strong>not in any way</strong> finished
+          </small>
+          <br />
+          <small>please be kind to my creation</small>
+        </p>
       </footer>
     </div>
   );
