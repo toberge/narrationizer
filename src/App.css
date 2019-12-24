@@ -4,28 +4,21 @@ h1, footer {
 
 main {
   /*width: 50vw;*/
+  width: 96vw;
   margin: 0 auto;
 }
 
 main fieldset {
   /*width: 30vw;*/
+  width: 60vw;
   margin: 0 auto;
 }
 
-@media screen and (max-aspect-ratio: 1 / 1) {
+@media screen and (min-aspect-ratio: 1 / 1) and (min-width: 1281px) {
   main {
-    width: 96vw;
+    width: 50vw !important;
   }
   main fieldset {
-    width: 60vw;
-  }
-}
-
-@media screen and (min-aspect-ratio: 1 / 1) {
-  main {
-    width: 50vw;
-  }
-  main fieldset {
-    width: 30vw;
+    width: 30vw !important;
   }
 }

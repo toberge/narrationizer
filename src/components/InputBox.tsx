@@ -2,6 +2,8 @@ import React from 'react';
 import { parse } from '../game/parser';
 import Log from './Log';
 import { perform } from '../game/performer';
+import GameState from '../game/GameState';
+import Loader from '../game/Loader';
 
 const Form = ({
   onChange,
@@ -17,22 +19,34 @@ const Form = ({
   </fieldset>
 );
 
-export class FormContainer extends React.Component<{}, { command: string; feedback: string[] }> {
+export class FormContainer extends React.Component<
+  {},
+  { command: string; feedback: string[]; gameState: GameState }
+> {
   constructor(props: any) {
     super(props);
     this.state = {
       command: '',
-      feedback: [
-        'this is the first line of the log',
-        'try something like "go left", "pick up key" or "open door"'
-      ]
+      feedback: [],
+      gameState: Loader.loadCampaign('test')
     };
   }
 
-  getThatMessage(): string {
+  componentDidMount(): void {
+    this.setState({
+      feedback: [
+        'this is the first line of the log',
+        'try something like "go left", "pick up key" or "open door"',
+        `You're standing in a room`,
+      ...this.state.gameState.currentRoom.enter()
+      ]
+    });
+  }
+
+  getThatMessage(): string[] {
     const parsedCommand = parse(this.state.command);
-    if (parsedCommand) return perform(parsedCommand);
-    else return 'invalid command';
+    if (parsedCommand) return perform(parsedCommand, this.state.gameState);
+    else return ['invalid command'];
     // return [...this.state.feedback, thing ? thing.toString() : 'nah'];
     // return this.state.feedback.push(thing ? thing.toString() : 'nah');
   }
@@ -44,7 +58,7 @@ export class FormContainer extends React.Component<{}, { command: string; feedba
         <Form
           onChange={command => this.setState({ command: command })}
           onSubmit={() =>
-            this.setState({ feedback: [...this.state.feedback, this.getThatMessage()] })
+            this.setState({ feedback: [...this.state.feedback, ...this.getThatMessage()] })
           }
         />
       </>

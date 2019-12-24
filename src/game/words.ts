@@ -2,7 +2,8 @@ const singularActions = ['sleep', 'wait', 'die'];
 const directions = ['up', 'down', 'left', 'right', 'north', 'south', 'east', 'west'];
 const directionalActions = ['go', 'walk', 'run'];
 const objects = ['door', 'key', 'exit', 'two furry dice'];
-const objectActions = ['open', 'pick up', 'take', 'inspect', 'look at', 'throw', 'stroke'];
+const objectActions = ['eat', 'open', 'pick up', 'take', 'inspect', 'look at', 'throw', 'stroke'];
+// TODO write dynamic loading of valid phrases
 
 const createHashMap = (array: string[]): Map<string, boolean> => {
   const map: Map<string, boolean> = new Map();
