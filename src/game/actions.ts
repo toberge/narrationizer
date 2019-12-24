@@ -2,7 +2,7 @@ export class ParsedPhrase {
   // parent: ParsedPhrase | null = null;
   // children: ParsedPhrase[] = [];
   public readonly word: string;
-  //
+
   constructor(word: string) {
     this.word = word;
   }

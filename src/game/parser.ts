@@ -49,8 +49,10 @@ export const lookaheadTable: number[][] = [
 export const parse = (command: string): null | ParsedPhrase[] => {
   const debugStack : (string|number)[] = [];
   debugStack.push(0);
+
+  // shearing away whitespace
+  const input: string[] = command.trim().split(' ');
   const stack: ParsedPhrase[] = [];
-  const input: string[] = command.split(' ');
   let position = 0;
 
   let error: boolean = false,
@@ -84,7 +86,8 @@ export const parse = (command: string): null | ParsedPhrase[] => {
     // do the lexical parsing
     while (lookahead < 0 && scanPos <= input.length) {
       phrase = input.slice(position, scanPos).reduce((acc, val) => `${acc} ${val}`);
-      lookahead = lookaheadIndexOf(phrase);
+      // ignoring case differences when looking up type
+      lookahead = lookaheadIndexOf(phrase.toLowerCase());
       scanPos++;
     }
     position = scanPos - 1;
