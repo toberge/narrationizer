@@ -1,9 +1,12 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import App from './App';
+import { shallow, ShallowWrapper } from 'enzyme';
 
-test('renders some dank text', () => {
-  const { getByText } = render(<App />);
-  const headerElement = getByText(/hi there/i);
-  expect(headerElement).toBeInTheDocument();
+
+describe('App', () => {
+  const wrapper: ShallowWrapper = shallow(<App />);
+
+  it('should render a title', function() {
+    expect(wrapper.find('h1')).toHaveLength(1);
+  });
 });

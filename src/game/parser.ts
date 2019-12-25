@@ -50,8 +50,8 @@ export const parse = (command: string): null | ParsedPhrase[] => {
   const debugStack : (string|number)[] = [];
   debugStack.push(0);
 
-  // shearing away whitespace
-  const input: string[] = command.trim().split(' ');
+  // shearing away whitespace and ignoring case differences
+  const input: string[] = command.trim().toLowerCase().split(' ');
   const stack: ParsedPhrase[] = [];
   let position = 0;
 
@@ -86,8 +86,7 @@ export const parse = (command: string): null | ParsedPhrase[] => {
     // do the lexical parsing
     while (lookahead < 0 && scanPos <= input.length) {
       phrase = input.slice(position, scanPos).reduce((acc, val) => `${acc} ${val}`);
-      // ignoring case differences when looking up type
-      lookahead = lookaheadIndexOf(phrase.toLowerCase());
+      lookahead = lookaheadIndexOf(phrase);
       scanPos++;
     }
     position = scanPos - 1;
