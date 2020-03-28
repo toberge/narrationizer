@@ -28,7 +28,14 @@ export const perform = (stack: ParsedPhrase[], gameState: GameState): string[] =
       return [action.perform(argument), message];
     } else if (action instanceof DirectionalAction && argument instanceof Direction) {
       // requires there being a passage in that direction
-      return [action.perform(argument)];
+      const path = gameState.currentRoom.explore(argument.word);
+      console.log('oh yes', path);
+      if (path) {
+        gameState.currentRoom = path.to;
+        return [action.perform(argument), path.description || 'to somewhere', ...path.to.enter()];
+      } else {
+        return ['there is nothing in that direction'];
+      }
     } else {
       return ['no viable 2-phrase action'];
     }

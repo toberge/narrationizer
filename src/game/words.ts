@@ -1,5 +1,5 @@
 const singularActions = ['sleep', 'wait', 'die'];
-const directions = ['up', 'down', 'left', 'right', 'north', 'south', 'east', 'west'];
+const directions = ['up', 'down', 'left', 'right', 'north', 'south', 'east', 'west', 'door', 'back'];
 const directionalActions = ['go', 'walk', 'run'];
 const objects = ['door', 'key', 'exit', 'two furry dice'];
 const objectActions = ['eat', 'open', 'pick up', 'take', 'inspect', 'look at', 'throw', 'stroke'];
