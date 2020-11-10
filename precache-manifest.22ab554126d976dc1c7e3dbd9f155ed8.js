@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0d809b6401fb2abb4a6e17ac8ae0d3a4",
+    "revision": "690a08e30a7d9e31929910326143a697",
     "url": "/narrationizer/index.html"
   },
   {
-    "revision": "1dc5b5c7a4c3fe1cdf60",
+    "revision": "a922f851fe1a56fef907",
     "url": "/narrationizer/static/css/main.593d5ee6.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/narrationizer/static/js/2.6f5dc4bb.chunk.js.LICENSE"
   },
   {
-    "revision": "1dc5b5c7a4c3fe1cdf60",
-    "url": "/narrationizer/static/js/main.539c82d1.chunk.js"
+    "revision": "a922f851fe1a56fef907",
+    "url": "/narrationizer/static/js/main.7457e638.chunk.js"
   },
   {
     "revision": "349d0469e73caf7d6fb7",
